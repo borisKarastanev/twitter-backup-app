@@ -8,11 +8,8 @@
     margin-bottom: 15px;
 }
 
-#getTimelineBtn{
+#getTimelineBtn, #signOut, #getFavoritesBtn{
     display: none;
 }
 
-#signOut {
-    display: none;
-}
 

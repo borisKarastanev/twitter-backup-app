@@ -5,6 +5,7 @@
 
 // Node core modules
 var path = require('path');
+var fs = require('fs');
 
 // Express modules
 var express = require('express');
@@ -13,8 +14,20 @@ var app = express();
 var router = express.Router();
 
 // App modules
+var DbInteract = require(path.join(__dirname, 'dbInteract'));
+var db = new DbInteract();
 
-app.use(express.static(path.join(process.cwd(), 'public')));
+//Parse Config file
+
+try {
+    var config = JSON.parse(fs.readFileSync(
+                    path.join(process.cwd(), 'config.json'), 'utf8')
+    );
+} catch (err) {
+    console.error(new Error(err));
+}
+
+app.use(express.static(path.join(process.cwd(), config.static_dir)));
 app.use(bodyparser.urlencoded({extended: true}));
 app.use(bodyparser.json());
 
@@ -22,7 +35,22 @@ router.use(function (req, res, next) {
     next();
 });
 
-app.use('/api', router);
-app.listen(3000);
+router.route('/favoriteUsers/:uid')
+        .get(function (req, res) {
+            db.getAllFavUsers(req.params.uid, function (err, data) {
+                if (err) {
+                    res.json({error_msg: new Error(err)});
+                } else {
+                    res.json(data);
+                }
+            });
+        })
+        .post(function (req, res) {
+
+        });
+
+app.use('/api/v1', router);
+app.listen(config.port);
+console.log('App is running at port:',config.port);
 
 
