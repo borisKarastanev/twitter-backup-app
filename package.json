@@ -1,0 +1,28 @@
+{
+  "name": "twitter-backup-app",
+  "version": "1.0.0",
+  "description": "A SPA for interacting with twitter's api",
+  "bin": {
+    "twitterappd": "./server/server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0"
+  },
+  "devDependencies": {
+    "nodemon": "latest"
+  },
+  "scripts": {
+    "start": "node ./server/server.js",
+    "debug": "nodemon ./server/server.js"
+  },
+  "engines": {
+    "node": ">=4.0.0 < 5.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/borisKarastanev/twitter-backup-app.git"
+  },
+  "author": "Boris Karastanev <b.karastanev@.gmail.com",
+  "license": "MIT"
+}
