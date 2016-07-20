@@ -37,12 +37,10 @@ router.use(function (req, res, next) {
 
 router.route('/favoriteUsers/:uid')
         .get(function (req, res) {
-            db.getAllFavUsers(req.params.uid, function (err, data) {
-                if (err) {
-                    res.json({error_msg: new Error(err)});
-                } else {
-                    res.json(data);
-                }
+            db.getAllFavUsers(req.params.uid).then(function (data) {
+                res.json(data);
+            }, function (err) {
+                res.json(err);
             });
         })
         .post(function (req, res) {
@@ -51,6 +49,6 @@ router.route('/favoriteUsers/:uid')
 
 app.use('/api/v1', router);
 app.listen(config.port);
-console.log('App is running at port:',config.port);
+console.log('App is running at port:', config.port);
 
 

@@ -9,18 +9,18 @@ function DbInteract() {
 
 }
 
-DbInteract.prototype.getAllFavUsers = function (uid, callback) {
+DbInteract.prototype.getAllFavUsers = function (uid) {
     var accounts = db.data('fav_twitter_accounts');
     var _usrId = parseInt(uid);
-    console.log('usr id ', _usrId);
-    var filter = {
-        'usr_id': _usrId
-    };
-    accounts.get(filter).then(function (data) {
-        console.log(data);
-        callback(null, data);
-    }, function (err) {
-        callback(err);
+    var query = new Everlive.Query();
+    query.where().eq('user_id', _usrId).done().select('account_id', 'account_name');
+    return new Promise(function (resolve, reject) {
+        accounts.get(query).then(function (data) {
+            console.log('Query result ', data.result);
+            resolve(data.result);
+        }, function (err) {
+            reject(new Error(err));
+        });
     });
 };
 
