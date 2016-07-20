@@ -12,6 +12,9 @@ node_modules/
 # ignore npm-debug.log
 npm-debug.log
 
+#ignore build tgz
+twitter-backup-app-*.*.*.tgz
+
 
 
 
