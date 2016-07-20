@@ -1,1 +1,22 @@
-<h2>Hellooooo</h2>
+
+<section class="col-xs-12" id="favorites" ng-controller="favController" data-ng-init="getFavList()">
+    <h3>Favorite Twitter Users</h3>
+    <section class="row">
+        <section class="col-xs-6">
+            <input type="text" ng-model="newUser" class="form-control" id="addNewUserInput" placeholder="Enter Serch pattern here" ng-show="connectedTwitter">
+        </section>
+        <section class="col-xs-6">
+            <button id="addNewUser" type="button" class="btn btn-success" ng-click="addNewUser(newUser)">Add new</button>
+        </section>
+    </section>
+    <section class="row" ng-repeat="fav in favorites">
+        <section class="col-xs-2 col-sm-1">
+            <img ng-src="{{fav.profile_img_url}}" class="img-circle">
+        </section>
+        <section id="{{fav.account_id}}" class="col-xs-10 col-sm-11">
+            <span ng-bind-html="fav.account_name"></span>
+            <br><small>{{fav.description}}</small>
+            <span><button class="btn btn-danger btn-sm">Delete</button></span>
+        </section>
+    </section>
+</section>

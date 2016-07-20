@@ -32,6 +32,7 @@ angular.module('twitterBackup.services', []).factory('twitterService', function 
             OAuth.clearCache('twitter');
             authorized = false;
         },
+        // Get API
         getLatestTweets: function (maxId) {
             var defer = $q.defer();
             var url = '/1.1/statuses/home_timeline.json';
@@ -40,7 +41,7 @@ angular.module('twitterBackup.services', []).factory('twitterService', function 
                 url += '?max_id=' + maxId;
             }
             var promise = authorized.get(url).done(function(data) {
-                console.log('Fav tweets ', data);
+                console.log('Tweets ', data);
                 defer.resolve(data);
             }).fail(function (err) {
                 defer.reject(err);
@@ -61,6 +62,16 @@ angular.module('twitterBackup.services', []).factory('twitterService', function 
             var token = authorized.oauth_token;
             var defer = $q.defer();
             var url = '/1.1/account/verify_credentials.json?' + token;
+            var promise = authorized.get(url).done(function(data) {
+                defer.resolve(data);
+            }).fail(function (err) {
+                defer.reject(err);
+            });
+            return defer.promise;
+        },
+        getUserAccountData: function (screen_name) {
+            var defer = $q.defer();
+            var url = '/1.1/users/show.json?screen_name=' + screen_name;
             var promise = authorized.get(url).done(function(data) {
                 defer.resolve(data);
             }).fail(function (err) {

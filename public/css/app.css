@@ -13,3 +13,7 @@
 }
 
 
+.form-control, #addNewUser {
+    margin: 10px;
+}
+

@@ -21,14 +21,11 @@
         <h2>Twitter Backup Application</h2>
         <section class="row">
             <section class="col-xs-6">
-                <input type="text" ng-model="searchTerm" class="form-control" id="searchBox" placeholder="Enter Serch pattern here" ng-show="connectedTwitter">
-            </section>
-            <section class="col-xs-6">
-                <button id="connectBtn" type="button" class="btn btn-primary" ng-click="connectBtn()">Connect to twitter</button>
+                <a href="#/"><button id="connectBtn" type="button" class="btn btn-primary" ng-click="connectBtn()">Connect to twitter</button></a>
                 <a href="#/"><button id="getTimelineBtn" type="button" class="btn btn-info" ng-click="refreshTimeline()">Get latest tweets</button></a>
-                <a href="#/favoriteUsers"><button id="getFavoritesBtn" type="button" class="btn btn-info" ng-click="getFavList()">Get favorite users</button></a>
+                <a href="#/favoriteUsers"><button id="getFavoritesBtn" type="button" class="btn btn-info">Get favorite users</button></a>
                 <button id="getFavoritePostsBtn" type="button" class="btn btn-info" ng-click="getFavPosts()">Get favorite posts</button>
-                <button id="signOut" type="button" class="btn btn-primary" ng-click="signOut()">Sign Out</button>
+                <a href="#/"><button id="signOut" type="button" class="btn btn-primary" ng-click="signOut()">Sign Out</button></a>
             </section>
         </section>
         <section class="row" ng-view=""></section>
