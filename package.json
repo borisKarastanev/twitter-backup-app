@@ -1,6 +1,6 @@
 {
   "name": "twitter-backup-app",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "A SPA for interacting with twitter's api",
   "bin": {
     "twitterappd": "./server/server.js"

@@ -31,15 +31,18 @@ Example:
 ####  Required software.
 
 * `NodeJs - Javascript on the server side more at: ` [https://nodejs.org/en/](https://nodejs.org/en/)
+* `AngularJs - Superheroic JavaScript MVW Framework more at: ` [https://https://angularjs.org/](https://angularjs.org/)
 * `Open Source Operating System - more at: ` [https://www.suse.com/](https://www.suse.com/)
 
 ####  Dependencies.
 
 * `Express.js (MODULE) - Fast, unopinionated, minimalist web framework for Node.js `
 * `Body-Parser (MODULE)- Node.js body parsing middleware`
+* `Everlive-SDK (MODULE) - Everlive SDK for Node.js`
 
 ####  Dev Dependencies.
 
+* `Nodemon (MODULE) - Simple monitor script for use during development of a node.js app.`
 
 ####  Installation process.
 
@@ -56,6 +59,24 @@ $ cd ./my-fav-projects/twitter-backup-app
   $ npm install
 
 ```
+
+####  Build process.
+
+ Open up a terminal and navigate to the downloaded project DIR:
+
+```
+$ cd ./my-fav-projects/twitter-backup-app
+
+```
+
+ To build the project simply run:
+
+```
+  $ ./git-version-sync.sh
+
+```
+
+ A twitter-backup-app-***.tgz package will be created in the PWD
 
 
 List with upcoming features and known Bugs and Issues:
