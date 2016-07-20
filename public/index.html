@@ -11,6 +11,7 @@
     <script type="application/javascript" src="libs/js/oauth.min.js"></script>
     <script type="application/javascript" src="libs/js/angular.min.js"></script>
     <script type="application/javascript" src="libs/js/angular-sanitize.min.js"></script>
+    <script type="application/javascript" src="libs/js/angular-route.min.js"></script>
     <script type="application/javascript" src="js/app.js"></script>
     <script type="application/javascript" src="js/controllers.js"></script>
     <script type="application/javascript" src="js/services.js"></script>
@@ -24,31 +25,13 @@
             </section>
             <section class="col-xs-6">
                 <button id="connectBtn" type="button" class="btn btn-primary" ng-click="connectBtn()">Connect to twitter</button>
-                <button id="getTimelineBtn" type="button" class="btn btn-info" ng-click="refreshTimeline()">Get latest tweets</button>
-                <button id="getFavoritesBtn" type="button" class="btn btn-info" ng-click="getFavList()">Get favorite tweets</button>
+                <a href="#/"><button id="getTimelineBtn" type="button" class="btn btn-info" ng-click="refreshTimeline()">Get latest tweets</button></a>
+                <a href="#/favoriteUsers"><button id="getFavoritesBtn" type="button" class="btn btn-info" ng-click="getFavList()">Get favorite users</button></a>
+                <button id="getFavoritePostsBtn" type="button" class="btn btn-info" ng-click="getFavPosts()">Get favorite posts</button>
                 <button id="signOut" type="button" class="btn btn-primary" ng-click="signOut()">Sign Out</button>
             </section>
         </section>
-        <section class="row">
-            <section class="col-xs-12" id="results">
-                <section class="row" ng-repeat="tweet in tweets | filter:searchTerm">
-                    <section class="col-xs-2 col-sm-1">
-                        <img ng-src="{{tweet.user.profile_image_url}}" class="img-circle">
-                    </section>
-                    <section class="col-xs-10 col-sm-11">
-                        <small>{{tweet.user.name}}</small>
-                        <br> <span ng-bind-html="tweet.text"></span>
-                    </section>
-                </section>
-                <section ng-show="rateLimitError">
-                    Rate limit reached you are making too many requests
-                </section>
-                <section>
-                    <br>
-                    <input type="button" class="btn btn-info" id="load-more" ng-click="refreshTimeline(tweets[tweets.length - 1].id)" ng-show="connectedTwitter" value="Load More">
-                </section>
-            </section>
-        </section>
+        <section class="row" ng-view=""></section>
     </section>
 </body>
 </html>

@@ -8,6 +8,7 @@ app.controller('appController', function ($scope, $http, $q, twitterService) {
 
     $scope.refreshTimeline = function (maxId) {
         twitterService.getLatestTweets(maxId).then(function (data) {
+            $scope.tweets.length = 0;
             $scope.tweets = $scope.tweets.concat(data);
         }, function () {
             $scope.rateLimitError = true;
@@ -28,11 +29,21 @@ app.controller('appController', function ($scope, $http, $q, twitterService) {
         });
     };
 
+    $scope.getFavPosts = function () {
+        twitterService.getFavoriteTweets().then(function (data) {
+            $scope.tweets.length = 0;
+            $scope.tweets = $scope.tweets.concat(data);
+        }, function (err) {
+            console.log(err);
+        });
+    };
+
     $scope.connectBtn = function () {
         twitterService.connectTwitter().then(function () {
             if (twitterService.isReady()) {
                 $('#connectBtn').fadeOut(function () {
-                    $('#getTimelineBtn, #signOut, #getFavoritesBtn').fadeIn();
+                    $('#getTimelineBtn, #signOut, #getFavoritesBtn, ' +
+                            '#getFavoritePostsBtn').fadeIn();
                     $scope.refreshTimeline();
                     $scope.connectedTwitter = true;
                 });
@@ -44,7 +55,8 @@ app.controller('appController', function ($scope, $http, $q, twitterService) {
     $scope.signOut = function () {
         twitterService.clearCache();
         $scope.tweets.length = 0;
-        $('#getTimelineBtn, #signOut, #getFavoritesBtn').fadeOut(function () {
+        $('#getTimelineBtn, #signOut, #getFavoritesBtn, ' +
+                '#getFavoritePostsBtn').fadeOut(function () {
             $('#connectBtn').fadeIn();
             $scope.$apply(function () {
                 $scope.connectedTwitter = false;

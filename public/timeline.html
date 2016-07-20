@@ -1,0 +1,18 @@
+<section class="col-xs-12" id="results">
+    <section class="row" ng-repeat="tweet in tweets | filter:searchTerm">
+        <section class="col-xs-2 col-sm-1">
+            <img ng-src="{{tweet.user.profile_image_url}}" class="img-circle">
+        </section>
+        <section class="col-xs-10 col-sm-11">
+            <small>{{tweet.user.name}}</small>
+            <br> <span ng-bind-html="tweet.text"></span>
+        </section>
+    </section>
+    <section ng-show="rateLimitError">
+        Rate limit reached you are making too many requests
+    </section>
+    <section>
+        <br>
+        <input type="button" class="btn btn-info" id="load-more" ng-click="refreshTimeline(tweets[tweets.length - 1].id)" ng-show="connectedTwitter" value="Load More">
+    </section>
+</section>
