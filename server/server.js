@@ -12,11 +12,6 @@ var express = require('express');
 var bodyparser = require('body-parser');
 var app = express();
 var router = express.Router();
-
-// App modules
-var DbInteract = require(path.join(__dirname, 'dbInteract'));
-var db = new DbInteract();
-
 //Parse Config file
 
 try {
@@ -26,6 +21,13 @@ try {
 } catch (err) {
     console.error(new Error(err));
 }
+
+// App modules
+var DbInteract = require(path.join(__dirname, 'dbInteract'));
+var db = new DbInteract();
+
+// Initialize the database
+db.init(config.everlive_key);
 
 app.use(express.static(path.join(process.cwd(), config.static_dir)));
 app.use(bodyparser.urlencoded({extended: true}));
@@ -44,6 +46,12 @@ router.route('/favoriteUsers/:uid')
             });
         })
         .post(function (req, res) {
+            db.createFavUser(req.body).then(function (data) {
+                res.json(data);
+            }, function (err) {
+                res.json(err);
+            });
+        }).delete(function (req, res) {
 
         });
 
