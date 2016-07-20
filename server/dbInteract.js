@@ -55,7 +55,6 @@ DbInteract.prototype.getAllFavUsers = function (uid) {
  */
 DbInteract.prototype.createFavUser = function (accountDetails) {
     accountDetails.user_id = parseInt(accountDetails.user_id);
-    console.log(accountDetails);
     var accounts = this.db.data(collections.fav_accounts);
     return new Promise(function (resolve, reject) {
         accounts.create(accountDetails).then(function (response) {
@@ -73,18 +72,17 @@ DbInteract.prototype.createFavUser = function (accountDetails) {
  * @param details {Object}
  */
 DbInteract.prototype.removeFavUser = function (details) {
-    console.log(this.db);
     var _usrId = parseInt(details.uid);
     var _accountId = parseInt(details.aid);
     var accounts = this.db.data(collections.fav_accounts);
     var query = new Everlive.Query();
     query.where().eq('user_id', _usrId).eq('account_id', _accountId);
     return new Promise(function (resolve, reject) {
-        accounts.destroySingle(query).then(function (data) {
-            console.log(data);
-            resolve(data);
+        accounts.destroy(query, function (data) {
+            if (data.result === 1) {
+                resolve({success: 'Entry deleted'});
+            }
         }, function (err) {
-            console.error(err);
             reject(err);
         });
     });

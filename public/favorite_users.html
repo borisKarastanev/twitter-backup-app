@@ -13,10 +13,10 @@
         <section class="col-xs-2 col-sm-1">
             <img ng-src="{{fav.profile_img_url}}" class="img-circle">
         </section>
-        <section id="{{fav.account_id}}" class="col-xs-10 col-sm-11">
+        <section class="col-xs-10 col-sm-11">
             <span ng-bind-html="fav.account_name"></span>
             <br><small>{{fav.description}}</small>
-            <span><button class="btn btn-danger btn-sm">Delete</button></span>
+            <span><button class="btn btn-danger btn-sm" ng-click="deleteUser()">Delete</button></span>
         </section>
     </section>
 </section>

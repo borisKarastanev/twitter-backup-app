@@ -76,6 +76,7 @@ app.controller('favController', function ($scope, $http, $q, twitterService) {
                 console.log(err);
             });
         }, function (err) {
+            alert(err);
             console.log(err);
         });
     };
@@ -100,11 +101,33 @@ app.controller('favController', function ($scope, $http, $q, twitterService) {
                 console.log(response);
             }, function (err) {
                 console.log(err);
-            })
+            });
             $scope.getFavList();
         }, function (err) {
             console.log(err.responseJSON.errors[0].message);
             $('#addNewUserInput').val(err.responseJSON.errors[0].message);
         });
+    };
+
+    $scope.deleteUser = function () {
+        var deleteUserDetails = {
+            uid: $scope.userId,
+            aid: this.fav.account_id
+        };
+
+        try {
+            deleteUserDetails = JSON.stringify(deleteUserDetails);
+        } catch (err) {
+            alert(err);
+        }
+        var _url = '/api/v1/favoriteUsers/delUser/' + $scope.userId;
+        $http.post(_url, deleteUserDetails).then(function (response) {
+            console.log('Del response ', response.data.success);
+            alert(response.data.success);
+        }, function (err) {
+            console.log(err);
+        });
+        $scope.getFavList();
     }
+
 });

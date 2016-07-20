@@ -51,8 +51,15 @@ router.route('/favoriteUsers/:uid')
             }, function (err) {
                 res.json(err);
             });
-        }).delete(function (req, res) {
+        });
 
+router.route('/favoriteUsers/delUser/:uid')
+        .post(function (req, res) {
+            db.removeFavUser(req.body).then(function (data) {
+                res.json(data);
+            }, function (err) {
+                res.json(err);
+            });
         });
 
 app.use('/api/v1', router);
