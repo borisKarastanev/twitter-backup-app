@@ -1,6 +1,7 @@
 /**
  * Created by boris on 7/18/16.
  */
+'use strict';
 
 /**
  * @description App main controller

@@ -1,6 +1,8 @@
 /**
  * Created by boris on 7/19/16.
  */
+'use strict';
+
 var Everlive = require('everlive-sdk');
 var collections = {
     db_status: 'check_status',
