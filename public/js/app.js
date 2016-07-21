@@ -5,6 +5,7 @@ var app = angular.module('twitterBackup', [
     'ngSanitize', 'ngRoute', 'twitterBackup.services'
 ]);
 
+// App routing
 app.config(function ($routeProvider) {
     $routeProvider.when('/', {
         templateUrl:'timeline.html'

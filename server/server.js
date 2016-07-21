@@ -37,6 +37,8 @@ router.use(function (req, res, next) {
     next();
 });
 
+
+//Router API
 router.route('/favoriteUsers/:uid')
         .get(function (req, res) {
             db.getAllFavUsers(req.params.uid).then(function (data) {
@@ -62,6 +64,7 @@ router.route('/favoriteUsers/delUser/:uid')
             });
         });
 
+// Requests entry point (/api/v1)
 app.use('/api/v1', router);
 app.listen(config.port);
 console.log('App is running at port:', config.port);

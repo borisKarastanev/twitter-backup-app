@@ -2,10 +2,17 @@
  * Created by boris on 7/18/16.
  */
 
+/**
+ * @description App main controller
+ */
 app.controller('appController', function ($scope, $http, $q, twitterService) {
     $scope.tweets = [];
     twitterService.initialize();
 
+    /**
+     * @description When invoked, the method refreshes the user timeline
+     * @param maxId
+     */
     $scope.refreshTimeline = function (maxId) {
         twitterService.getLatestTweets(maxId).then(function (data) {
             $scope.tweets.length = 0;
@@ -14,6 +21,10 @@ app.controller('appController', function ($scope, $http, $q, twitterService) {
             $scope.rateLimitError = true;
         });
     };
+
+    /**
+     * @description Method for re-twitting posts
+     */
     $scope.retweetPost = function () {
         var _pid = this.tweet.id_str;
         twitterService.retweetUserPost(_pid).then(function (data) {
@@ -25,6 +36,9 @@ app.controller('appController', function ($scope, $http, $q, twitterService) {
         });
     };
 
+    /**
+     * @description The method adds a user to the favorite list
+     */
     $scope.addToFavoriteTweets = function () {
         var _pid = this.tweet.id_str;
         twitterService.addPostToFavoriteTweets(_pid).then(function (data) {
@@ -35,6 +49,10 @@ app.controller('appController', function ($scope, $http, $q, twitterService) {
             console.log(err.responseJSON.errors[0].message);
         });
     };
+
+    /**
+     * @description Login method
+     */
     $scope.connectBtn = function () {
         twitterService.connectTwitter().then(function () {
             if (twitterService.isReady()) {
@@ -49,6 +67,9 @@ app.controller('appController', function ($scope, $http, $q, twitterService) {
             }
         });
     };
+    /**
+     * @description Logout method
+     */
     $scope.signOut = function () {
         twitterService.clearCache();
         $scope.tweets.length = 0;
@@ -62,6 +83,7 @@ app.controller('appController', function ($scope, $http, $q, twitterService) {
         $scope.rateLimitError = false;
     };
 
+    // Handle those pesky already logged or returning users
     if (twitterService.isReady()) {
         $('#connectBtn, #login-msg').hide();
         $('#getTimelineBtn, #signOut, #getFavoritesBtn, ' +
@@ -71,16 +93,24 @@ app.controller('appController', function ($scope, $http, $q, twitterService) {
     }
 });
 
+/**
+ * @description Favorites controller DB API
+ */
 app.controller('favController', function ($scope, $http, $q, $location, twitterService) {
     $scope.favorites = [];
     twitterService.initialize();
     $scope.userId = null;
 
+    // Handle bogus url attempts
     if (!twitterService.isReady()) {
         $location.path('#/');
     }
 
+    /**
+     * @description Get all favorite accounts Method
+     */
     $scope.getFavList = function () {
+        // Get current logged user id
         twitterService.getUserCredentials().then(function (userData) {
             $scope.userId = userData.id_str;
             var _url = '/api/v1/favoriteUsers/' + $scope.userId;
@@ -97,6 +127,10 @@ app.controller('favController', function ($scope, $http, $q, $location, twitterS
         });
     };
 
+    /**
+     * @description Add new user to Everlive db
+     * @param user {String}
+     */
     $scope.addNewUser = function (user) {
         twitterService.getUserAccountData(user).then(function (data) {
             $('#addNewUserInput').val('');
@@ -127,6 +161,9 @@ app.controller('favController', function ($scope, $http, $q, $location, twitterS
         });
     };
 
+    /**
+     * @description Method for removing users from the database collection
+     */
     $scope.deleteUser = function () {
         var deleteUserDetails = {
             uid: $scope.userId,
@@ -155,6 +192,9 @@ app.controller('favController', function ($scope, $http, $q, $location, twitterS
 
 });
 
+/**
+ * @description Favorite user tweets controller
+ */
 app.controller('favUserTweets', function ($scope, $http, $q, $location, twitterService) {
     $scope.favUserTweets = [];
     $scope.favAccountName = '';
@@ -163,6 +203,9 @@ app.controller('favUserTweets', function ($scope, $http, $q, $location, twitterS
         $location.path('#/');
     }
 
+    /**
+     * @description Get all favorite users tweets
+     */
     $scope.getFavUserTweets = function () {
         twitterService.getFavUserTimeline().then(function (data) {
             $scope.favUserTweets.length = 0;
@@ -175,6 +218,9 @@ app.controller('favUserTweets', function ($scope, $http, $q, $location, twitterS
         });
     };
 
+    /**
+     * @description retweet post
+     */
     $scope.retweetPost = function () {
         var _pid = this.tweet.id_str;
         twitterService.retweetUserPost(_pid).then(function (data) {
@@ -186,6 +232,9 @@ app.controller('favUserTweets', function ($scope, $http, $q, $location, twitterS
         });
     };
 
+    /**
+     * @description Add to favorites(all liked tweets)
+     */
     $scope.addToFavoriteTweets = function () {
         var _pid = this.tweet.id_str;
         twitterService.addPostToFavoriteTweets(_pid).then(function (data) {
@@ -198,8 +247,14 @@ app.controller('favUserTweets', function ($scope, $http, $q, $location, twitterS
     }
 });
 
+/**
+ * @description Favorite tweets controller
+ */
 app.controller('favPosts', function ($scope, $http, $q, $location, twitterService) {
     $scope.posts = [];
+    /**
+     * @description Get all liked tweets
+     */
     $scope.getFavPosts = function () {
         twitterService.getFavoriteTweets().then(function (data) {
             $scope.posts.length = 0;
@@ -210,6 +265,9 @@ app.controller('favPosts', function ($scope, $http, $q, $location, twitterServic
         });
     };
 
+    /**
+     * @description Remove from liked list
+     */
     $scope.removePost = function () {
         var _pid = this.post.id_str;
         twitterService.removeFromFavoritePosts(_pid).then(function (data) {

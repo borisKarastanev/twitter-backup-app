@@ -1,6 +1,9 @@
 /**
  * Created by boris on 7/18/16.
  */
+/**
+ * @description Angular shared services
+ */
 angular.module('twitterBackup.services', []).factory('twitterService', function ($q) {
     var authorized = false;
     var accountId = null;
@@ -51,7 +54,7 @@ angular.module('twitterBackup.services', []).factory('twitterService', function 
             });
             return defer.promise;
         },
-        getFavoriteTweets: function (maxId) {
+        getFavoriteTweets: function () {
             var defer = $q.defer();
             var url = '/1.1/favorites/list.json';
             var promise = authorized.get(url).done(function(data) {
