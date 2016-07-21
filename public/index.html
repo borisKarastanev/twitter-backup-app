@@ -20,9 +20,10 @@
 <body>
     <section class="container" ng-controller="appController">
         <h2>Twitter Backup Application</h2>
+        <h4 id="login-msg">Please Login with your twitter account</h4>
         <section class="row">
             <section class="col-xs-6">
-                <a href="#/"><button id="connectBtn" type="button" class="btn btn-primary" ng-click="connectBtn()">Connect to twitter</button></a>
+                <a href="#/"><img src="resources/signin.png" id="connectBtn"  ng-click="connectBtn()"></a>
                 <a href="#/"><button id="getTimelineBtn" type="button" class="btn btn-info" ng-click="refreshTimeline()">Get latest tweets</button></a>
                 <a href="#/favoriteUsers"><button id="getFavoritesBtn" type="button" class="btn btn-info">Get favorite users</button></a>
                 <a href="#/"><button id="getFavoritePostsBtn" type="button" class="btn btn-info" ng-click="getFavPosts()">Get favorite posts</button></a>

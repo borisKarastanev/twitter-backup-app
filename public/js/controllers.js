@@ -28,7 +28,7 @@ app.controller('appController', function ($scope, $http, $q, twitterService) {
     $scope.connectBtn = function () {
         twitterService.connectTwitter().then(function () {
             if (twitterService.isReady()) {
-                $('#connectBtn').fadeOut(function () {
+                $('#connectBtn, #login-msg').fadeOut(function () {
                     $('#getTimelineBtn, #signOut, #getFavoritesBtn, ' +
                             '#getFavoritePostsBtn').fadeIn();
                     $scope.refreshTimeline();
@@ -44,17 +44,18 @@ app.controller('appController', function ($scope, $http, $q, twitterService) {
         $scope.tweets.length = 0;
         $('#getTimelineBtn, #signOut, #getFavoritesBtn, ' +
                 '#getFavoritePostsBtn').fadeOut(function () {
-            $('#connectBtn').fadeIn();
+            $('#connectBtn, #login-msg').fadeIn();
             $scope.$apply(function () {
                 $scope.connectedTwitter = false;
-            })
+            });
         });
 
     };
 
     if (twitterService.isReady()) {
         $('#connectBtn').hide();
-        $('#getTimelineBtn, #signOut').show();
+        $('#getTimelineBtn, #signOut, #getFavoritesBtn, ' +
+                '#getFavoritePostsBtn').show();
         $scope.connectedTwitter = true;
         $scope.refreshTimeline();
     }
@@ -64,6 +65,10 @@ app.controller('favController', function ($scope, $http, $q, $location, twitterS
     $scope.favorites = [];
     twitterService.initialize();
     $scope.userId = null;
+
+    if (!twitterService.isReady()) {
+        $location.path('#/');
+    }
 
     $scope.getFavList = function () {
         twitterService.getUserCredentials().then(function (userData) {
@@ -144,6 +149,10 @@ app.controller('favUserTweets', function ($scope, $http, $q, $location, twitterS
     $scope.favUserTweets = [];
     $scope.favAccountName = '';
 
+    if (!twitterService.isReady()) {
+        $location.path('#/');
+    }
+
     $scope.getFavUserTweets = function () {
         twitterService.getFavUserTimeline().then(function (data) {
             $scope.favUserTweets.length = 0;
@@ -161,6 +170,17 @@ app.controller('favUserTweets', function ($scope, $http, $q, $location, twitterS
         twitterService.retweetUserPost(_pid).then(function (data) {
             if (data.retweeted === true) {
                 alert('Successfully retweted post to timeline');
+            }
+        }, function (err) {
+            console.log(err.responseJSON.errors[0].message);
+        });
+    };
+
+    $scope.addToFavoriteTweets = function () {
+        var _pid = this.tweet.id_str;
+        twitterService.addPostToFavoriteTweets(_pid).then(function (data) {
+            if(data.favorited === true) {
+                alert('Successfully saved in favorites');
             }
         }, function (err) {
             console.log(err.responseJSON.errors[0].message);

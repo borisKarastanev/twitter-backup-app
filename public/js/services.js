@@ -93,6 +93,18 @@ angular.module('twitterBackup.services', []).factory('twitterService', function 
             });
             return defer.promise;
         },
+        //Create API
+        addPostToFavoriteTweets: function (pid) {
+            var defer = $q.defer();
+            var url = '/1.1/favorites/create.json?id=' + pid;
+
+            var promise = authorized.post(url).done(function(data) {
+                defer.resolve(data);
+            }).fail(function (err) {
+                defer.reject(err);
+            });
+            return defer.promise;
+        },
         //Posts interaction API
         retweetUserPost: function (pid) {
             var defer = $q.defer();
