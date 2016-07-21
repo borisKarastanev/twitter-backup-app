@@ -21,6 +21,7 @@ app.controller('appController', function ($scope, $http, $q, twitterService) {
             $scope.tweets = $scope.tweets.concat(data);
         }, function (err) {
             console.log(err);
+            alert(err.responseJSON.errors[0].message);
         });
     };
 
@@ -59,7 +60,7 @@ app.controller('appController', function ($scope, $http, $q, twitterService) {
     }
 });
 
-app.controller('favController', function ($scope, $http, $q, twitterService) {
+app.controller('favController', function ($scope, $http, $q, $location, twitterService) {
     $scope.favorites = [];
     twitterService.initialize();
     $scope.userId = null;
@@ -76,7 +77,7 @@ app.controller('favController', function ($scope, $http, $q, twitterService) {
                 console.log(err);
             });
         }, function (err) {
-            alert(err);
+            alert(err.responseJSON.errors[0].message);
             console.log(err);
         });
     };
@@ -101,6 +102,8 @@ app.controller('favController', function ($scope, $http, $q, twitterService) {
                 console.log(response);
             }, function (err) {
                 console.log(err);
+                alert(err.responseJSON.errors[0].message);
+                $scope.rateLimitError = true;
             });
             $scope.getFavList();
         }, function (err) {
@@ -126,8 +129,28 @@ app.controller('favController', function ($scope, $http, $q, twitterService) {
             alert(response.data.success);
         }, function (err) {
             console.log(err);
+            alert(err.responseJSON.errors[0].message);
         });
         $scope.getFavList();
+    };
+
+    $scope.storeAid = function () {
+        twitterService.storeAccountId(this.fav.account_id);
     }
 
+});
+
+app.controller('favUserTweets', function ($scope, $http, $q, $location, twitterService) {
+    $scope.favUserTweets = [];
+    $scope.favAccountName = '';
+    $scope.getFavUserTweets = function () {
+        twitterService.getFavUserTimeline().then(function (data) {
+            $scope.favUserTweets.length = 0;
+            $scope.favUserTweets = $scope.favUserTweets.concat(data);
+            $scope.favAccountName += data[0].user.name;
+        }, function (err) {
+            console.log(err);
+            alert(err.responseJSON.errors[0].message);
+        });
+    }
 });

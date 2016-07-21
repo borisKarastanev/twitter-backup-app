@@ -3,7 +3,7 @@
     <h3>Favorite Twitter Users</h3>
     <section class="row">
         <section class="col-xs-6">
-            <input type="text" ng-model="newUser" class="form-control" id="addNewUserInput" placeholder="Enter Serch pattern here" ng-show="connectedTwitter">
+            <input type="text" ng-model="newUser" class="form-control" id="addNewUserInput" placeholder="Search Twitter Accounts" ng-show="connectedTwitter">
         </section>
         <section class="col-xs-6">
             <button id="addNewUser" type="button" class="btn btn-success" ng-click="addNewUser(newUser)">Add new</button>
@@ -16,6 +16,7 @@
         <section class="col-xs-10 col-sm-11">
             <span ng-bind-html="fav.account_name"></span>
             <br><small>{{fav.description}}</small>
+            <span><a href="#/favoriteUsers/tweets"><button class="btn btn-warning btn-sm" ng-click="storeAid()">View Timeline</button></a></span>
             <span><button class="btn btn-danger btn-sm" ng-click="deleteUser()">Delete</button></span>
         </section>
     </section>

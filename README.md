@@ -30,15 +30,21 @@ Example:
 
 ####  Required software.
 
-* `NodeJs - Javascript on the server side more at: ` [https://nodejs.org/en/](https://nodejs.org/en/)
-* `AngularJs - Superheroic JavaScript MVW Framework more at: ` [https://https://angularjs.org/](https://angularjs.org/)
-* `Open Source Operating System - more at: ` [https://www.suse.com/](https://www.suse.com/)
+* `NodeJs - Javascript on the server side. More at: ` [https://nodejs.org/en/](https://nodejs.org/en/)
+* `Twitter account - You can get one at: ` [https://twitter.com/?lang=en](https://twitter.com/?lang=en)
+* `Open Source Operating System. More at: ` [https://www.suse.com/](https://www.suse.com/)
 
 ####  Dependencies.
 
 * `Express.js (MODULE) - Fast, unopinionated, minimalist web framework for Node.js `
 * `Body-Parser (MODULE)- Node.js body parsing middleware`
 * `Everlive-SDK (MODULE) - Everlive SDK for Node.js`
+* `AngularJs - Superheroic JavaScript MVW Framework. More at: ` [https://angularjs.org/](https://angularjs.org/)
+* `OAuth - Forget OAuth complexity more at: ` [https://jquery.com/](https://jquery.com/)
+* `jQuery - jQuery is a fast, small, and feature-rich JavaScript library. More at: ` [https://oauth.io/home](https://oauth.io/home)
+* `Bootstrap ootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.More at: ` [https://oauth.io/home](https://oauth.io/home)
+
+
 
 ####  Dev Dependencies.
 
@@ -77,11 +83,6 @@ $ cd ./my-fav-projects/twitter-backup-app
 ```
 
  A twitter-backup-app-***.tgz package will be created in the PWD
-
-
-List with upcoming features and known Bugs and Issues:
-
-[TODO](TODO.md)
 
 ***
 

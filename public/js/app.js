@@ -11,7 +11,9 @@ app.config(function ($routeProvider) {
     }).when('/favoriteUsers', {
         templateUrl: 'favorite_users.html'
 
+    }).when('/favoriteUsers/tweets',{
+        templateUrl: 'favorite_user_timeline.html'
     }).otherwise({
         redirectTo: '/'
-    })
+    });
 });

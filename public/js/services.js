@@ -3,6 +3,7 @@
  */
 angular.module('twitterBackup.services', []).factory('twitterService', function ($q) {
     var authorized = false;
+    var accountId = null;
 
     return {
         initialize: function () {
@@ -31,6 +32,9 @@ angular.module('twitterBackup.services', []).factory('twitterService', function 
         clearCache: function() {
             OAuth.clearCache('twitter');
             authorized = false;
+        },
+        storeAccountId: function (id) {
+            accountId = id;
         },
         // Get API
         getLatestTweets: function (maxId) {
@@ -72,6 +76,16 @@ angular.module('twitterBackup.services', []).factory('twitterService', function 
         getUserAccountData: function (screen_name) {
             var defer = $q.defer();
             var url = '/1.1/users/show.json?screen_name=' + screen_name;
+            var promise = authorized.get(url).done(function(data) {
+                defer.resolve(data);
+            }).fail(function (err) {
+                defer.reject(err);
+            });
+            return defer.promise;
+        },
+        getFavUserTimeline: function () {
+            var defer = $q.defer();
+            var url = '/1.1/statuses/user_timeline.json?user_id=' + accountId;
             var promise = authorized.get(url).done(function(data) {
                 defer.resolve(data);
             }).fail(function (err) {
