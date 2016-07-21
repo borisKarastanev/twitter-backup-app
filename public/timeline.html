@@ -6,9 +6,16 @@
         <section class="col-xs-2 col-sm-1">
             <img ng-src="{{tweet.user.profile_image_url}}" class="img-circle">
         </section>
-        <section class="col-xs-10 col-sm-11">
-            <small>{{tweet.user.name}}</small>
+        <section class="col-xs-12 col-sm-12">
+            <section class="col-xs-6">
+                <small>{{tweet.user.name}}</small>
             <br> <span ng-bind-html="tweet.text"></span>
+                <a href="{{tweet.entities.urls[0].url}}">{{tweet.entities.urls[0].url}}</a>
+            </section>
+            <section class="col-xs-8 col-sm-6 twitter-btn-group">
+                <button class="btn btn-success btn-sm" ng-click="addToFavoriteTweets()" >Like Post</button>
+                <button class="btn btn-info btn-sm" ng-click="retweetPost()">Retweet</button>
+            </section>
         </section>
     </section>
     <section ng-show="rateLimitError">

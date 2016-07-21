@@ -45,7 +45,6 @@ angular.module('twitterBackup.services', []).factory('twitterService', function 
                 url += '?max_id=' + maxId;
             }
             var promise = authorized.get(url).done(function(data) {
-                console.log('Tweets ', data);
                 defer.resolve(data);
             }).fail(function (err) {
                 defer.reject(err);
@@ -97,6 +96,19 @@ angular.module('twitterBackup.services', []).factory('twitterService', function 
         addPostToFavoriteTweets: function (pid) {
             var defer = $q.defer();
             var url = '/1.1/favorites/create.json?id=' + pid;
+
+            var promise = authorized.post(url).done(function(data) {
+                defer.resolve(data);
+            }).fail(function (err) {
+                defer.reject(err);
+            });
+            return defer.promise;
+        },
+
+        //Remove API
+        removeFromFavoritePosts: function (pid) {
+            var defer = $q.defer();
+            var url = '/1.1/favorites/destroy.json?id=' + pid;
 
             var promise = authorized.post(url).done(function(data) {
                 defer.resolve(data);

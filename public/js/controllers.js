@@ -14,17 +14,27 @@ app.controller('appController', function ($scope, $http, $q, twitterService) {
             $scope.rateLimitError = true;
         });
     };
-
-    $scope.getFavPosts = function () {
-        twitterService.getFavoriteTweets().then(function (data) {
-            $scope.tweets.length = 0;
-            $scope.tweets = $scope.tweets.concat(data);
+    $scope.retweetPost = function () {
+        var _pid = this.tweet.id_str;
+        twitterService.retweetUserPost(_pid).then(function (data) {
+            if (data.retweeted === true) {
+                alert('Successfully retweted post to timeline');
+            }
         }, function (err) {
-            console.log(err);
-            alert(err.responseJSON.errors[0].message);
+            console.log(err.responseJSON.errors[0].message);
         });
     };
 
+    $scope.addToFavoriteTweets = function () {
+        var _pid = this.tweet.id_str;
+        twitterService.addPostToFavoriteTweets(_pid).then(function (data) {
+            if (data.favorited === true) {
+                alert('Successfully saved in favorites');
+            }
+        }, function (err) {
+            console.log(err.responseJSON.errors[0].message);
+        });
+    };
     $scope.connectBtn = function () {
         twitterService.connectTwitter().then(function () {
             if (twitterService.isReady()) {
@@ -49,11 +59,11 @@ app.controller('appController', function ($scope, $http, $q, twitterService) {
                 $scope.connectedTwitter = false;
             });
         });
-
+        $scope.rateLimitError = false;
     };
 
     if (twitterService.isReady()) {
-        $('#connectBtn').hide();
+        $('#connectBtn, #login-msg').hide();
         $('#getTimelineBtn, #signOut, #getFavoritesBtn, ' +
                 '#getFavoritePostsBtn').show();
         $scope.connectedTwitter = true;
@@ -179,11 +189,37 @@ app.controller('favUserTweets', function ($scope, $http, $q, $location, twitterS
     $scope.addToFavoriteTweets = function () {
         var _pid = this.tweet.id_str;
         twitterService.addPostToFavoriteTweets(_pid).then(function (data) {
-            if(data.favorited === true) {
+            if (data.favorited === true) {
                 alert('Successfully saved in favorites');
             }
         }, function (err) {
             console.log(err.responseJSON.errors[0].message);
         });
+    }
+});
+
+app.controller('favPosts', function ($scope, $http, $q, $location, twitterService) {
+    $scope.posts = [];
+    $scope.getFavPosts = function () {
+        twitterService.getFavoriteTweets().then(function (data) {
+            $scope.posts.length = 0;
+            $scope.posts = $scope.posts.concat(data);
+        }, function (err) {
+            console.log(err);
+            alert(err.responseJSON.errors[0].message);
+        });
+    };
+
+    $scope.removePost = function () {
+        var _pid = this.post.id_str;
+        twitterService.removeFromFavoritePosts(_pid).then(function (data) {
+            if (data.favorited === false) {
+                alert('Successfully saved in favorites');
+            }
+        }, function (err) {
+            console.log(err);
+            alert(err.responseJSON.errors[0].message);
+        });
+        $scope.getFavPosts();
     }
 });

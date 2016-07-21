@@ -15,6 +15,8 @@ npm-debug.log
 #ignore build tgz
 twitter-backup-app-*.*.*.tgz
 
+el_store/
+
 
 
 

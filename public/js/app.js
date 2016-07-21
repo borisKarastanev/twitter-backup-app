@@ -13,6 +13,10 @@ app.config(function ($routeProvider) {
 
     }).when('/favoriteUsers/tweets',{
         templateUrl: 'favorite_user_timeline.html'
+
+    }).when('/favoritePosts',{
+        templateUrl: 'favorite_posts.html'
+
     }).otherwise({
         redirectTo: '/'
     });
