@@ -229,6 +229,7 @@ app.controller('favUserTweets', function ($scope, $http, $q, $location, twitterS
             }
         }, function (err) {
             console.log(err.responseJSON.errors[0].message);
+            alert(err.responseJSON.errors[0].message);
         });
     };
 
