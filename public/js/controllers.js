@@ -143,6 +143,7 @@ app.controller('favController', function ($scope, $http, $q, $location, twitterS
 app.controller('favUserTweets', function ($scope, $http, $q, $location, twitterService) {
     $scope.favUserTweets = [];
     $scope.favAccountName = '';
+
     $scope.getFavUserTweets = function () {
         twitterService.getFavUserTimeline().then(function (data) {
             $scope.favUserTweets.length = 0;
@@ -151,6 +152,18 @@ app.controller('favUserTweets', function ($scope, $http, $q, $location, twitterS
         }, function (err) {
             console.log(err);
             alert(err.responseJSON.errors[0].message);
+            $scope.rateLimitError = true;
+        });
+    };
+
+    $scope.retweetPost = function () {
+        var _pid = this.tweet.id_str;
+        twitterService.retweetUserPost(_pid).then(function (data) {
+            if (data.retweeted === true) {
+                alert('Successfully retweted post to timeline');
+            }
+        }, function (err) {
+            console.log(err.responseJSON.errors[0].message);
         });
     }
 });

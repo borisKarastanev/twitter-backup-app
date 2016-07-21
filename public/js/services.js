@@ -92,6 +92,17 @@ angular.module('twitterBackup.services', []).factory('twitterService', function 
                 defer.reject(err);
             });
             return defer.promise;
+        },
+        //Posts interaction API
+        retweetUserPost: function (pid) {
+            var defer = $q.defer();
+            var url = '/1.1/statuses/retweet/'+ pid +'.json';
+            var promise = authorized.post(url).done(function(data) {
+                defer.resolve(data);
+            }).fail(function (err) {
+                defer.reject(err);
+            });
+            return defer.promise;
         }
     }
 });
