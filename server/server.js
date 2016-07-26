@@ -1,3 +1,4 @@
+#!/usr/bin/node
 /**
  * Created by boris on 7/15/16.
  */
@@ -6,6 +7,7 @@
 // Node core modules
 var path = require('path');
 var fs = require('fs');
+var https = require('https');
 
 // Express modules
 var express = require('express');
@@ -66,7 +68,14 @@ router.route('/favoriteUsers/delUser/:uid')
 
 // Requests entry point (/api/v1)
 app.use('/api/v1', router);
-app.listen(config.port);
-console.log('App is running at port:', config.port);
+
+// Init secure connection
+https.createServer({
+    key: fs.readFileSync(path.join(__dirname, 'ssl', 'server.key')),
+    cert: fs.readFileSync(path.join(__dirname, 'ssl', 'server.crt'))
+}, app).listen(config.port, function () {
+    console.log('App is running at port:', config.port);
+});
+
 
 

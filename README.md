@@ -63,8 +63,12 @@ $ cd ./my-fav-projects/twitter-backup-app
 
 ```
   $ npm install
+  $ npm start
 
 ```
+ A server has been started at https://localhost:8443
+
+ P.S The port and few other features can be changed in the config.json file located in the project root dir.
 
 ####  Build process.
 
@@ -84,11 +88,37 @@ $ cd ./my-fav-projects/twitter-backup-app
 
  A twitter-backup-app-***.tgz package will be created in the PWD
 
+ ####  Install after build.
+
+ * `Install as a global module`
+
+ Open up a terminal and navigate to the downloaded project DIR:
+
+ ```
+ $ cd ./my-fav-projects/twitter-backup-app
+
+ $ npm install -g twitter-backup-app-***.tgz
+
+ ```
+
+ This will install the app in the /usr/lib/node_modules
+
+ Open up a terminal and run:
+
+ ```
+
+ $  twitterappd
+
+ ```
+
+ This will start the server and the app will be available at https://localhost:8443
+
+
 ***
 
-Happy testing.
+ If you have question, ideas or you want to report a bug, please drop me a line at:
 
-<b.karastanev@gmail.com>
+ <b.karastanev@gmail.com>
 
 
 
