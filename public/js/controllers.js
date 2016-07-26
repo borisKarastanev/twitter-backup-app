@@ -114,8 +114,16 @@ app.controller('favController', function ($scope, $http, $q, $location, twitterS
         twitterService.getUserCredentials().then(function (userData) {
             $scope.userId = userData.id_str;
             var _url = '/api/v1/favoriteUsers/' + $scope.userId;
-            $http.get(_url).then(function (result) {
+            /*$http.get(_url).then(function (result) {
+             var serverResult = result.data;
+             $scope.favorites.length = 0;
+             $scope.favorites = $scope.favorites.concat(serverResult);
+             }, function (err) {
+             console.log(err);
+             });*/
+            twitterService.getAllFavoritesUsers($scope.userId).then(function (result) {
                 var serverResult = result.data;
+                console.log(serverResult);
                 $scope.favorites.length = 0;
                 $scope.favorites = $scope.favorites.concat(serverResult);
             }, function (err) {
@@ -146,13 +154,19 @@ app.controller('favController', function ($scope, $http, $q, $location, twitterS
             } catch (err) {
                 alert(err);
             }
-            var _url = '/api/v1/favoriteUsers/' + $scope.userId;
-            $http.post(_url, newUserData).then(function (response) {
+            /*var _url = '/api/v1/favoriteUsers/' + $scope.userId;
+             $http.post(_url, newUserData).then(function (response) {
+             console.log(response);
+             }, function (err) {
+             console.log(err);
+             alert(err.responseJSON.errors[0].message);
+             $scope.rateLimitError = true;
+             });*/
+            twitterService.addNewUserToFavorites(newUserData).then(function (response) {
                 console.log(response);
             }, function (err) {
                 console.log(err);
                 alert(err.responseJSON.errors[0].message);
-                $scope.rateLimitError = true;
             });
             $scope.getFavList();
         }, function (err) {
@@ -175,8 +189,15 @@ app.controller('favController', function ($scope, $http, $q, $location, twitterS
         } catch (err) {
             alert(err);
         }
-        var _url = '/api/v1/favoriteUsers/delUser/' + $scope.userId;
-        $http.post(_url, deleteUserDetails).then(function (response) {
+        /*var _url = '/api/v1/favoriteUsers/delUser/' + $scope.userId;
+         $http.post(_url, deleteUserDetails).then(function (response) {
+         console.log('Del response ', response.data.success);
+         alert(response.data.success);
+         }, function (err) {
+         console.log(err);
+         alert(err.responseJSON.errors[0].message);
+         });*/
+        twitterService.delUserFromFavoriteUsers(deleteUserDetails).then(function (response) {
             console.log('Del response ', response.data.success);
             alert(response.data.success);
         }, function (err) {
@@ -273,12 +294,13 @@ app.controller('favPosts', function ($scope, $http, $q, $location, twitterServic
         var _pid = this.post.id_str;
         twitterService.removeFromFavoritePosts(_pid).then(function (data) {
             if (data.favorited === false) {
-                alert('Successfully saved in favorites');
+                alert('Successfully removed from Favorites');
             }
+            $scope.getFavPosts();
         }, function (err) {
             console.log(err);
             alert(err.responseJSON.errors[0].message);
         });
-        $scope.getFavPosts();
+
     }
 });
