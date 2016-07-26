@@ -1,6 +1,8 @@
 /**
  * Created by boris on 7/18/16.
  */
+'use strict';
+
 var app = angular.module('twitterBackup', [
     'ngSanitize', 'ngRoute', 'twitterBackup.services'
 ]);

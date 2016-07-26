@@ -3,7 +3,7 @@
  * Created by boris on 7/15/16.
  */
 
-
+'use strict';
 // Node core modules
 var path = require('path');
 var fs = require('fs');
