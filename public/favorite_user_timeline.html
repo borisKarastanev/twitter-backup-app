@@ -4,6 +4,7 @@
 <section class="col-xs-12" id="results" ng-controller="favUserTweets" data-ng-init="getFavUserTweets()">
     <h3>{{favAccountName + ' Latest tweets'}}</h3>
     <a href="#/favoriteUsers"><button class="btn btn-info">Back</button></a>
+    <img src="resources/spin.gif" class="spin-anim">
     <section class="row" ng-repeat="tweet in favUserTweets | filter:searchTerm">
         <section class="col-xs-2 col-sm-1">
             <img ng-src="{{tweet.user.profile_image_url}}" class="img-circle">

@@ -3,6 +3,7 @@
 </section>
 <section class="col-xs-12" id="results" ng-controller="favPosts" data-ng-init="getFavPosts()">
     <h3>Favorite Posts from users</h3>
+    <img src="resources/spin.gif" class="spin-anim">
     <section class="row" ng-repeat="post in posts | filter:searchTerm">
         <section class="col-xs-2 col-sm-1">
             <img ng-src="{{post.user.profile_image_url}}" class="img-circle">

@@ -27,3 +27,8 @@
     margin: 10px;
 }
 
+.spin-anim {
+    display: none;
+    margin: 150px auto;
+}
+

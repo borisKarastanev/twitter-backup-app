@@ -15,7 +15,9 @@ app.controller('appController', function ($scope, $http, $q, twitterService) {
      * @param maxId
      */
     $scope.refreshTimeline = function (maxId) {
+        $('.spin-anim').css('display', 'block');
         twitterService.getLatestTweets(maxId).then(function (data) {
+            $('.spin-anim').css('display', 'none');
             $scope.tweets.length = 0;
             $scope.tweets = $scope.tweets.concat(data);
         }, function () {
@@ -111,18 +113,13 @@ app.controller('favController', function ($scope, $http, $q, $location, twitterS
      * @description Get all favorite accounts Method
      */
     $scope.getFavList = function () {
+        $('.spin-anim').css('display', 'block');
         // Get current logged user id
         twitterService.getUserCredentials().then(function (userData) {
             $scope.userId = userData.id_str;
             var _url = '/api/v1/favoriteUsers/' + $scope.userId;
-            /*$http.get(_url).then(function (result) {
-             var serverResult = result.data;
-             $scope.favorites.length = 0;
-             $scope.favorites = $scope.favorites.concat(serverResult);
-             }, function (err) {
-             console.log(err);
-             });*/
             twitterService.getAllFavoritesUsers($scope.userId).then(function (result) {
+                $('.spin-anim').css('display', 'none');
                 var serverResult = result.data;
                 console.log(serverResult);
                 $scope.favorites.length = 0;
@@ -155,14 +152,6 @@ app.controller('favController', function ($scope, $http, $q, $location, twitterS
             } catch (err) {
                 alert(err);
             }
-            /*var _url = '/api/v1/favoriteUsers/' + $scope.userId;
-             $http.post(_url, newUserData).then(function (response) {
-             console.log(response);
-             }, function (err) {
-             console.log(err);
-             alert(err.responseJSON.errors[0].message);
-             $scope.rateLimitError = true;
-             });*/
             twitterService.addNewUserToFavorites(newUserData).then(function (response) {
                 console.log(response);
             }, function (err) {
@@ -190,14 +179,6 @@ app.controller('favController', function ($scope, $http, $q, $location, twitterS
         } catch (err) {
             alert(err);
         }
-        /*var _url = '/api/v1/favoriteUsers/delUser/' + $scope.userId;
-         $http.post(_url, deleteUserDetails).then(function (response) {
-         console.log('Del response ', response.data.success);
-         alert(response.data.success);
-         }, function (err) {
-         console.log(err);
-         alert(err.responseJSON.errors[0].message);
-         });*/
         twitterService.delUserFromFavoriteUsers(deleteUserDetails).then(function (response) {
             console.log('Del response ', response.data.success);
             alert(response.data.success);
@@ -229,7 +210,9 @@ app.controller('favUserTweets', function ($scope, $http, $q, $location, twitterS
      * @description Get all favorite users tweets
      */
     $scope.getFavUserTweets = function () {
+        $('.spin-anim').css('display', 'block');
         twitterService.getFavUserTimeline().then(function (data) {
+            $('.spin-anim').css('display', 'none');
             $scope.favUserTweets.length = 0;
             $scope.favUserTweets = $scope.favUserTweets.concat(data);
             $scope.favAccountName += data[0].user.name;
@@ -279,7 +262,9 @@ app.controller('favPosts', function ($scope, $http, $q, $location, twitterServic
      * @description Get all liked tweets
      */
     $scope.getFavPosts = function () {
+        $('.spin-anim').css('display', 'block');
         twitterService.getFavoriteTweets().then(function (data) {
+            $('.spin-anim').css('display', 'none');
             $scope.posts.length = 0;
             $scope.posts = $scope.posts.concat(data);
         }, function (err) {
